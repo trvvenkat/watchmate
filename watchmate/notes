@@ -1,0 +1,67 @@
+Django:
+https://www.djangoproject.com/download/
+
+
+To create a vitrual env:
+python -m venv menv
+
+
+To activate the env:
+Win: menv\Scripts\activate
+Linux: source menv/bin/activate
+
+
+To show the installed packages:
+pip freeze
+
+To create a project:
+django-admin startproject <project>
+
+To create DB changes:
+python manage.py createsuperuser
+
+To create migrations:
+python manage.py makemigrations
+
+To make migration changes to DB:
+python manage.py migrate
+
+
+To add new projects:
+python manage.py startproject <project_name>
+
+and add the installed project in "settings.py" INSTALLED_APPS
+
+
+To create URLS:
+from django.urls import path, include
+
+urlpatterns = [
+  path("movie/", include("watchlist_app.urls"))
+]
+
+create a "urls.py" inside the app
+from dhango.urls import path, include
+
+urlpatterns = [
+  path("<endpoint>/<pk:int>/", view, name="")
+]
+
+
+
+To return json:
+from django.html import JsonResponse
+from .models import Movie
+
+def list_movie(request):
+  movies = Movies.objects.all()
+  data = {"movies": list(movies.values())}
+
+  return JsonResponse(data)
+
+
+
+Django Rest Framework:
+https://www.django-rest-framework.org/
+
+
