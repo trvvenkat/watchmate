@@ -6,7 +6,7 @@ from rest_framework.views import APIView
 from watchlist_app.models import Movie
 from watchlist_app.api.serializers import MovieSerializer
 
-
+#class based views
 class MovieListAV(APIView):
 
     def get(self, request):
@@ -56,6 +56,7 @@ class MovieDetailAV(APIView):
             return Response({"Error": "Movie Not Found"}, status=status.HTTP_404_NOT_FOUND)
     
 
+#function based views
 # @api_view(["GET", "POST"])
 # def movie_list(request):
     
