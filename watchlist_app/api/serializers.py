@@ -4,12 +4,21 @@ from watchlist_app.models import Movie
 
 # Model Serializers
 class MovieSerializer(serializers.ModelSerializer):
+
+    #custom field addition
+    name_len = serializers.SerializerMethodField()
+
     class Meta:
 
         model = Movie
         fields = "__all__"  # this with include all the fields
         # fields = ["id", "name"] # include only the fileds that we mention here
         # exclude = ["id"] # fields that we want to exclude
+
+    
+    #custom field addition inside serializer
+    def get_name_len(self, object):
+        return len(object.name)
 
 
     
