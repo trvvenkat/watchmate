@@ -63,6 +63,7 @@ class StreamPlatformListAV(APIView):
 
         platforms = StreamPlatform.objects.all()
         serializer = StreamPlatformSerializer(platforms, many=True)
+        # serializer = StreamPlatformSerializer(platforms, many=True, context={'request': request}) # for HyperlinkRelatedField
         return Response(serializer.data)
     
     def post(self, request):
@@ -85,7 +86,8 @@ class StreamPlatformDetailsAV(APIView):
         except StreamPlatform.DoesNotExist:
             return Response({"Error": "Platform doesnt Exist"}, status=status.HTTP_404_NOT_FOUND)
         
-        serializer = StreamPlatformSerializer(platform)
+        serializer = StreamPlatformSerializer(platform) 
+        # serializer = StreamPlatformSerializer(platform, context={'request': request})# for HyperlinkRelatedField
         return Response(serializer.data)
     
 

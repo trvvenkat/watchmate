@@ -13,9 +13,14 @@ class WatchListSerializer(serializers.ModelSerializer):
 
 
 class StreamPlatformSerializer(serializers.ModelSerializer):
+# class StreamPlatformSerializer(serializers.HyperlinkedModelSerializer): This replaces "pk" field with "url"
 
     #nested serializer (connecting to many watchlist in one platform)
     watchlist = WatchListSerializer(many=True, read_only=True)
+    # watchlist = serializers.StringRelatedField(many=True, read_only=True) # returns the __str__ method from the connected model
+    # watchlist = serializers.PrimaryKeyRelatedField(many=True, read_only=True) # return s the primary key from the connected model
+    # watchlist = serializers.HyperlinkedRelatedField(many=True, read_only=True, view_name="movie-details") # to add Hyperlinks to the connected model's view (need to add context at the initiation of this serializer)
+    # watchlist = serializers.SlugRelatedField(many=True, read_only=True, slug_field="title") # to add in the mentioned field from the connected model 
 
     class Meta:
 
