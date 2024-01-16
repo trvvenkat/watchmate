@@ -4,11 +4,14 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework import generics
 from rest_framework import mixins
+from rest_framework import viewsets
+from django.shortcuts import get_object_or_404
 
 from watchlist_app.models import WatchList, StreamPlatform, Review
 from watchlist_app.api.serializers import WatchListSerializer, StreamPlatformSerializer, ReviewSerializer
 
 
+# full generics Concrete views with custom queryset
 class ReviewCreate(generics.CreateAPIView):
     serializer_class = ReviewSerializer
 
@@ -112,6 +115,21 @@ class WatchListDetailAV(APIView):
             return Response(status=status.HTTP_204_NO_CONTENT)
         except WatchList.DoesNotExist:
             return Response({"Error": "Movie Not Found"}, status=status.HTTP_404_NOT_FOUND)
+
+# viewsets
+class StreamPlatformVS(viewsets.ViewSet):
+    
+    def list(self, request):
+        queryset = StreamPlatform.objects.all()
+        serializer = StreamPlatformSerializer(queryset, many=True)
+        return Response(serializer.data)
+    
+    def retrieve(self, request, pk=None):
+        queryset = StreamPlatform.objects.all()
+        platform = get_object_or_404(queryset, pk=pk)
+        serializer = StreamPlatformSerializer(platform)
+        return Response(serializer.data)
+
 
 
 class StreamPlatformListAV(APIView):
