@@ -129,6 +129,14 @@ class StreamPlatformVS(viewsets.ViewSet):
         platform = get_object_or_404(queryset, pk=pk)
         serializer = StreamPlatformSerializer(platform)
         return Response(serializer.data)
+    
+    def create(self, request):
+        serializer = StreamPlatformSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 
